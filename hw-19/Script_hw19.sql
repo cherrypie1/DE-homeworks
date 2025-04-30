@@ -66,6 +66,7 @@ and	(f.scheduled_departure - f.actual_departure) > (select avg_delay from averag
 create view bookings.msw_flights as
 SELECT 
     f.flight_id,
+    a.city,
     f.flight_no,
     f.departure_airport,
     f.arrival_airport,
@@ -74,8 +75,9 @@ SELECT
     f.status
 FROM 
     bookings.flights f
+JOIN bookings.airports a ON a.airport_code = f.departure_airport
 WHERE 
-    f.departure_airport IN ('SVO', 'DME', 'VKO');  
+    a.city = 'Москва';  
 ;
 select * from bookings.msw_flights;
 
